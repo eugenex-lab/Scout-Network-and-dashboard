@@ -2,7 +2,7 @@
   <ul>
     <player-info v-for="player in scoutPlayers" :key="player.id" :position="player.position"
                  :age="player.age" :best-attributes="player.bestAttributes" :link="player.link" :name="player.name"
-                 :nationality="player.nationality" :preferred-foot="player.preferredFoot"
+                 :countries="player.countries" :preferred-foot="player.preferredFoot"
                  :weakness="player.weakness"
     >
     </player-info>

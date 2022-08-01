@@ -7,7 +7,7 @@
     </base-button>
     <base-button  @click="setSelectedTab('new-player')"
     :mode="AddResButtonMode">
-      Add New Player
+      New Player
     </base-button>
   </base-card>
   <component :is="selectedTab"></component>
@@ -31,7 +31,7 @@ export default {
         name: 'Mason Greenwood',
         age: 21,
         position: 'Striker',
-        nationality: 'England',
+        countries: 'England',
         preferredFoot: 'Left',
         bestAttributes: ['Finishing', 'Two footed'],
         weakness: ['Women', 'Acceleration'],
@@ -43,7 +43,7 @@ export default {
           name: 'Benjamin Šeško',
           age: 19,
           position: 'Striker',
-          nationality: 'Slovenia',
+          countries: 'Slovenia',
           preferredFoot: 'Right',
           bestAttributes: ['Finishing', 'Acceleration', 'Strength'],
           weakness: ['None'],

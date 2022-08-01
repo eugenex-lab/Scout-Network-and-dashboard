@@ -12,7 +12,7 @@
     </div>
 
     <p>Age: {{age}}</p>
-    <p>Nationality: {{nationality}}</p>
+    <p>Nationality: {{countries}}</p>
     <p>Position: {{position}}</p>
     <p>preferredFoot: {{preferredFoot}}</p>
 
@@ -69,7 +69,7 @@ export default {
       required: true,
 
     },
-    nationality: {
+    countries: {
       type: String,
       required: true
     },
