@@ -6,6 +6,7 @@
       <div class="form-control">
         <label for="name">Name</label>
         <input type="text" id="name" v-model="name" ref="name" autocomplete="off"/>
+
       </div>
       <div class="form-control">
         <label for="age">Age</label>
@@ -63,36 +64,45 @@
         <input type="text" id="weakness-attribute" v-model="newWeaknessAttributeText" ref="weaknessAttribute"
                placeholder="E.g. strength" autocomplete="off"/>
         <br>
-        <button class="buttonAddWeak" >Add</button>
+       <button type='submit' @click="submit(addNewAttributeWeakness())" class="buttonAddWeak">Add</button>
       </div>
 
 <div class="shitUp">
   <base-card>
-
-      <h4 class="topicSTyle">Best Attributes</h4>
-      <div class="list-attribute">
-        <ul>
-          <li
-              v-for="(best) in bestAttributes" :key="best"
-          >
-            <span class="listSStrength">{{ best.item }}</span>
-          </li>
-        </ul>
+    <div class="oneLIne">
+      <div class="timelineView">
+        <h4 class="topicStyle">Best Attributes</h4>
+        <div class="list-attribute">
+          <ul>
+            <li
+                v-for="(best) in bestAttributes" :key="best"
+            >
+              <span class="listSStrength">{{ best.item }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <h4 class="topicStyle"  >Weakness Attributes</h4>
+        <div class="list-attribute" id="red" >
+          <ul>
+            <li
+                v-for="(weak) in weaknessAttributes" :key="weak"
+            >
+              <span class="listSWeakness">{{ weak.item }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
-
   </base-card>
 </div>
 
 
-
       <div class=" form-control
           ">
-
-
-        <label for="link">Link to Player Stats</label>
+        <label for="link">Resource to Player Stats</label>
         <input type="url" id="link" v-model="link" ref="link"/>
-
-
         <input type="file" @change="onFile" ref="imgSrc"/>
         <img src="imgSrc" v-if="imgSrc" alt="" ref="imgSrc">
       </div>
@@ -110,27 +120,41 @@
 // import List from "@/components/ScoutDetails/LIstPlayer";
 
 import BaseCard from "@/components/UI/BaseCard";
+import ValidationForm from "@/components/Validation/ValidationForm";
 export default {
   components: {
-    BaseCard
+    BaseCard,ValidationForm
     // 'list-item': List,
   },
   props: ['item'],
   bestAttributesInput: "",
   data() {
     return {
+      name: 'Home',
       imgSrc: '',
       newBestAttributeText: '',
-      props: ["bestAttributes"],
+      newWeaknessAttributeText: '',
+      props: ["bestAttributes", "weaknessAttributes"],
+      weaknessAttributes: [
+        // {
+        //   id: 1,
+        //   item: "women",
+        // }
+        // ,
+        // {
+        //   id:2,
+        //   item: "laziness"
+        // }
+      ],
       bestAttributes: [
-        {
-          id: 1,
-          item: 'leadership'
-        },
-        {
-          id: 2,
-          item: 'defense'
-        }
+      //   {
+      //     id: 1,
+      //     item: 'leadership'
+      //   },
+      //   {
+      //     id: 2,
+      //     item: 'defense'
+      //   }
       ],
       nextAttributeId: 3
 
@@ -231,10 +255,28 @@ export default {
   },
 
   methods: {
+
+    addNewAttributeWeakness() {
+      if(this.newWeaknessAttributeText === ""){
+        return false;
+      }else if (this.weaknessAttributes.length > 2 || this.weaknessAttributes.length < 0) {
+        return false;
+      } else {
+
+      this.weaknessAttributes.push({
+        id: this.nextAttributeId,
+        item: this.newWeaknessAttributeText
+      });
+      this.newWeaknessAttributeText = '';
+      this.nextAttributeId++;
+      }
+    },
     addNewAttribute: function () {
 
       // handle empty input
       if (this.newBestAttributeText === '') {
+        return false;
+      } else if (this.bestAttributes.length > 2 || this.bestAttributes.length < 0) {
         return false;
       } else {
         console.log(this.newBestAttributeText, this.nextAttributeId);
@@ -283,10 +325,22 @@ export default {
 </script>
 
 <style scoped>
-
+.oneLIne {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
 .buttonAddWeak{
   background-color: #c6050b;
   color: #ffffff;
+  height: 20px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 10px;
+  margin-top: -70px;
+  cursor: pointer;
+  border-radius: 5px;
 }
 .buttonAdd {
   background-color: #130c6a;
@@ -302,15 +356,7 @@ export default {
 
 }
 
-.shitUp {
-  margin-right: 40px;
-   width: 100%;
-  max-width: 100%;
-  backface-visibility: hidden;
-  padding-right: 70px;
-  padding-left: 10px;
 
-}
 
 .listSStrength {
   color: #7921c1;
@@ -325,7 +371,7 @@ div {
 
 }
 
-.topicSTyle{
+.topicStyle{
   top: 10px;
   margin-top: 5px;
   font-family: proxima-nova, sans-serif;
@@ -336,7 +382,10 @@ div {
   font-feature-settings: "smcp";
   text-transform: lowercase;
   font-style: italic;
+}
 
+.topicStyle red {
+  color: #c6050b;
 }
 
 .list-attribute {
@@ -422,6 +471,18 @@ datalist {
   padding: 0.15rem;
   border: 1px solid #ccc;
   border-radius: 0.25rem;
+}
+
+.shitUp {
+
+  margin-right: 4.4rem;
+  margin-left: 0.7rem;
+
+}
+
+
+#red {
+  color: #c6050b;
 }
 
 
