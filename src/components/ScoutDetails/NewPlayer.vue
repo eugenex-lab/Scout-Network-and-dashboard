@@ -3,11 +3,13 @@
 <!--    <form v-on:submit.prevent="addNewAttribute"-->
     <form @submit.prevent=""
     >
-      <div class="form-control">
-        <label for="name">Name</label>
-        <input type="text" id="name" v-model="name" ref="name" autocomplete="off"/>
+      <ValidationForm>
+        <div class="form-control">
+          <label for="name">Name</label>
+          <input type="text" id="name" v-model="name" ref="name" autocomplete="off"/>
+        </div>
+      </ValidationForm>
 
-      </div>
       <div class="form-control">
         <label for="age">Age</label>
         <input type="Number" id="age" v-model="age" ref="age"/>
@@ -67,7 +69,7 @@
        <button type='submit' @click="submit(addNewAttributeWeakness())" class="buttonAddWeak">Add</button>
       </div>
 
-<div class="shitUp">
+<div class="shitUp"  v-show="showCard"  >
   <base-card>
     <div class="oneLIne">
       <div class="timelineView">
@@ -75,9 +77,10 @@
         <div class="list-attribute">
           <ul>
             <li
-                v-for="(best) in bestAttributes" :key="best"
+                v-for="(best,index) in bestAttributes" :key="best"
             >
               <span class="listSStrength">{{ best.item }}</span>
+              <button class="buttonDelete" @click="deleteAttributeStrenght(index)">Delete</button>
             </li>
           </ul>
         </div>
@@ -87,9 +90,12 @@
         <div class="list-attribute" id="red" >
           <ul>
             <li
-                v-for="(weak) in weaknessAttributes" :key="weak"
+                v-for="(weak, index) in weaknessAttributes" :key="weak"
             >
+<!--              <span class="listSWeakness">{{ weak.item }}</span>-->
+
               <span class="listSWeakness">{{ weak.item }}</span>
+              <button class="buttonDelete" @click="deleteAttributeWeak(index)">Delete</button>
             </li>
           </ul>
         </div>
@@ -101,15 +107,17 @@
 
       <div class=" form-control
           ">
-        <label for="link">Resource to Player Stats</label>
+        <br>
+        <label for="link">Resource to Player Profile</label>
         <input type="url" id="link" v-model="link" ref="link"/>
+        <br>
+        <label for="link">Add Player Image</label>
         <input type="file" @change="onFile" ref="imgSrc"/>
         <img src="imgSrc" v-if="imgSrc" alt="" ref="imgSrc">
       </div>
       <div class="form-control">
         <base-button :class="mode" @click="addPlayer" style="color: #ffffff ; background-color: #790f0f ">Add Player
         </base-button>
-
       </div>
     </form>
   </base-card>
@@ -120,16 +128,18 @@
 // import List from "@/components/ScoutDetails/LIstPlayer";
 
 import BaseCard from "@/components/UI/BaseCard";
-import ValidationForm from "@/components/Validation/ValidationForm";
+// import ValidationForm from "@/components/Validation/ValidationForm";
 export default {
   components: {
-    BaseCard,ValidationForm
+    BaseCard,
+    // ValidationForm
     // 'list-item': List,
   },
   props: ['item'],
   bestAttributesInput: "",
   data() {
     return {
+      showCard: true,
       name: 'Home',
       imgSrc: '',
       newBestAttributeText: '',
@@ -253,8 +263,26 @@ export default {
 
     }
   },
+computed: {
 
+},
   methods: {
+    checkAttributeInput() {
+      if (this.weaknessAttributes.length < 0) {
+        return this.showCard = true;
+      } else {
+        return this.showCard = true;
+      }
+    },
+
+    // delete method by index
+    deleteAttributeWeak(index) {
+      this.weaknessAttributes.splice(index, 1);
+
+    },
+    deleteAttributeStrenght(index) {
+      this.bestAttributes.splice(index, 1);
+    },
 
     addNewAttributeWeakness() {
       if(this.newWeaknessAttributeText === ""){
@@ -317,10 +345,10 @@ export default {
       console.log(enteredWeakness)
       console.log(enteredLink)
       console.log(enteredImgSrc)
-    },
-  },
-
+    }
+  }
 }
+
 
 </script>
 
@@ -483,6 +511,19 @@ datalist {
 
 #red {
   color: #c6050b;
+}
+
+.buttonDelete {
+  background-color: rgba(198, 5, 11, 0.81);
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  height: 15px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 10px;
+  margin-top: -70px;
+  cursor: pointer;
 }
 
 
