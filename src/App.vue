@@ -1,40 +1,23 @@
 <template>
-
-  <the-header title="European Scout"> </the-header>
-  <home-Page>
-  </home-Page>
-
+  <v-app>
+    <v-main>
+      <HelloWorld/>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
-
-// import greenWoodImg from "/image/greenwoodImg.jpeg";
-// import seskoimg from "/image/noFace.png";
-// import StoredPlayers from "./components/ScoutDetails/StoredPlayers.vue";
-import TheHeader from "@/components/layouts/TheHeader";
-// import BaseButton from "@/components/UI/BaseButton";
-import HomePage from "./components/ScoutDetails/HomePage";
+import HelloWorld from './components/HelloWorld.vue'
 
 export default {
-components: {
-  TheHeader,HomePage,
-},
+  name: 'App',
+
+  components: {
+    HelloWorld,
+  },
+
+  data: () => ({
+    //
+  }),
 }
 </script>
-
-<style >
-
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  font-family: 'Roboto', sans-serif;
-}
-
-body {
-  margin: 0;
-}
-
-</style>
