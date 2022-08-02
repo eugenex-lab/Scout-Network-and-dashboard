@@ -22,6 +22,17 @@ export default {
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 <style scoped>
+base-card {
+  margin: auto;
+  max-width: 40rem;
+  background-color: aliceblue;
+}
+div {
+  margin: auto;
+  max-width: 40rem;
+  background-color: aliceblue;
+
+}
 header {
   width: 100%;
   height: 5rem;

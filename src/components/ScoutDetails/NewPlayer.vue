@@ -1,6 +1,7 @@
 <template>
   <base-card>
-    <form class="formx" @submit.prevent="adddNewPlayer"
+<!--    <form v-on:submit.prevent="addNewAttribute"-->
+    <form @submit.prevent=""
     >
       <div class="form-control">
         <label for="name">Name</label>
@@ -40,38 +41,57 @@
         <span>
           <input type="checkbox" id="right" name="right"
                  checked>
-          <label class="right" for="right" style="font-weight: normal">right</label>
+          <label  class="tick"  for="right" style="font-weight: normal">right</label>
 </span>
 
         <span>
           <input type="checkbox" id="left" name="left">
-          <label for="left" style="font-weight: normal">left</label>
+          <label class="tick" for="left" style="font-weight: normal">left</label>
         </span>
 
-
       </div>
 
       <div class="form-control">
-        <label for="bestAttributes">Best Attributes</label>
-        <input type="text" id="newBestAttributes" v-model="newBestAttributesText" ref="bestAttributes"
+        <label for="best-attribute">Best Attributes</label>
+        <input type="text" id="best-attribute" v-model="newBestAttributeText" ref="bestAttributes"
                placeholder="E.g. leadership" autocomplete="off"/>
         <br>
-        <button>Add</button>
-        <li v-for="attribute in bestAttributes" :key="attribute.id">
-          {{ attribute.text }}
-        </li>
+        <button type='submit' @click="submit(addNewAttribute())" class="buttonAdd" >Add</button>
+<br>
+        <br>
+        <label for="weakness-attribute">Weakness Attributes</label>
+        <input type="text" id="weakness-attribute" v-model="newWeaknessAttributeText" ref="weaknessAttribute"
+               placeholder="E.g. strength" autocomplete="off"/>
+        <br>
+        <button class="buttonAddWeak" >Add</button>
+      </div>
 
-      </div>
-      <div class="form-control">
-        <label for="weakness">Weakness</label>
-        <input type="text" id="weakness" v-model="weakness" ref="weakness" placeholder="E.g. poor leadership"
-               autocomplete="off"/>
-      </div>
-      <div class="form-control">
+<div class="shitUp">
+  <base-card>
+
+      <h4 class="topicSTyle">Best Attributes</h4>
+      <div class="list-attribute">
+        <ul>
+          <li
+              v-for="(best) in bestAttributes" :key="best"
+          >
+            <span class="listSStrength">{{ best.item }}</span>
+          </li>
+        </ul>
+    </div>
+
+  </base-card>
+</div>
+
+
+
+      <div class=" form-control
+          ">
+
+
         <label for="link">Link to Player Stats</label>
         <input type="url" id="link" v-model="link" ref="link"/>
-      </div>
-      <div class="form-control">
+
 
         <input type="file" @change="onFile" ref="imgSrc"/>
         <img src="imgSrc" v-if="imgSrc" alt="" ref="imgSrc">
@@ -86,29 +106,146 @@
 </template>
 
 <script>
+
+// import List from "@/components/ScoutDetails/LIstPlayer";
+
+import BaseCard from "@/components/UI/BaseCard";
 export default {
+  components: {
+    BaseCard
+    // 'list-item': List,
+  },
+  props: ['item'],
   bestAttributesInput: "",
-  bestAttributes: [],
   data() {
     return {
       imgSrc: '',
-      newBestAttributesText: '',
+      newBestAttributeText: '',
+      props: ["bestAttributes"],
+      bestAttributes: [
+        {
+          id: 1,
+          item: 'leadership'
+        },
+        {
+          id: 2,
+          item: 'defense'
+        }
+      ],
+      nextAttributeId: 3
+
+      // {
+      //   id: 3,
+      //   item: 'speed'
+      // },
+      // {
+      //   id: 4,
+      //   item: 'passing'
+      // },
+      // {
+      //   id: 5,
+      //   item: 'strength'
+      // },
+      // {
+      //   id: 6,
+      //   item: 'aggression'
+      // },
+      // {
+      //   id: 7,
+      //   item: 'vision'
+      // },
+      // {
+      //   id: 8,
+      //   item: 'crossing'
+      // },
+      // {
+      //   id: 9,
+      //   item: 'finishing'
+      // },
+      // {
+      //   id: 10,
+      //   item: 'heading'
+      // },
+      // {
+      //   id: 11,
+      //   item: 'short passing'
+      // },
+      // {
+      //   id: 12,
+      //   item: 'long passing'
+      // },
+      // {
+      //   id: 13,
+      //   item: 'curve'
+      // },
+      // {
+      //   id: 14,
+      //   item: 'free kick'
+      // },
+      // {
+      //   id: 15,
+      //   item: 'long shot'
+      // },
+      // {
+      //   id: 16,
+      //   item: 'shot power'
+      // },
+      // {
+      //   id: 17,
+      //   item: 'volley'
+      // },
+      // {
+      //   id: 18,
+      //   item: 'penalty shot'
+      // },
+      // {
+      //   id: 19,
+      //   item: 'kicking'
+      // },
+      // {
+      //   id: 20,
+      //   item: 'handling'
+      // },
+      // {
+      //   id: 21,
+      //   item: 'reflexes'
+      // },
+      // {
+      //   id: 22,
+      //   item: 'jumping'
+      // },
+      // {
+      //   id: 23,
+      //   item: 'sprint speed'
+      // },
+      // {
+      //   id: 24,
+      //   item: 'balance'
+      // },
+      // {
+      //   id: 25,
+      //   item: 'ball control'
+      // },
 
     }
   },
-  name: "NewPlayer"
-  ,
+
   methods: {
-    addAttribute() {
-     if(this.newBestAttributesText){
-      this.bestAttributes.push({
-        text: this.newBestAttributesText,
-      })
-      this.newBestAttributesText = ''
-     }
-    },
+    addNewAttribute: function () {
 
-
+      // handle empty input
+      if (this.newBestAttributeText === '') {
+        return false;
+      } else {
+        console.log(this.newBestAttributeText, this.nextAttributeId);
+        this.bestAttributes.push({
+          id: this.nextAttributeId++,
+          item: this.newBestAttributeText
+        });
+        this.newBestAttributeText = '';
+      }
+    }
+    ,
     onFile(e) {
       const files = e.target.files
       if (!files.length) return
@@ -147,6 +284,77 @@ export default {
 
 <style scoped>
 
+.buttonAddWeak{
+  background-color: #c6050b;
+  color: #ffffff;
+}
+.buttonAdd {
+  background-color: #130c6a;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  height: 20px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 10px;
+  margin-top: -70px;
+  cursor: pointer;
+
+}
+
+.shitUp {
+  margin-right: 40px;
+   width: 100%;
+  max-width: 100%;
+  backface-visibility: hidden;
+  padding-right: 70px;
+  padding-left: 10px;
+
+}
+
+.listSStrength {
+  color: #7921c1;
+}
+
+
+
+div {
+  margin: auto;
+  max-width: 40rem;
+  background-color: aliceblue;
+
+}
+
+.topicSTyle{
+  top: 10px;
+  margin-top: 5px;
+  font-family: proxima-nova, sans-serif;
+  -moz-font-feature-settings: "smcp";
+  -ms-font-feature-settings: "smcp";
+  -webkit-font-feature-settings: "smcp";
+  -o-font-feature-settings: "smcp";
+  font-feature-settings: "smcp";
+  text-transform: lowercase;
+  font-style: italic;
+
+}
+
+.list-attribute {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: baseline;
+  margin-top: -30px
+}
+
+div.form-control {
+  margin: 10px;
+
+}
+
+.background-color{
+  background: rgba(143, 175, 222, 0.7);
+}
 
 input#age {
   width: 30%;
@@ -160,6 +368,7 @@ label {
   font-weight: bold;
   display: block;
   margin-bottom: 0.5rem;
+  color: #090d7f;
 }
 
 input,
@@ -172,7 +381,9 @@ textarea {
   border-radius: 0.25rem;
 
 }
-
+.tick{
+  color: rgba(105, 85, 195, 0.84);
+}
 select {
   display: block;
   width: 70%;
@@ -211,9 +422,9 @@ datalist {
   padding: 0.15rem;
   border: 1px solid #ccc;
   border-radius: 0.25rem;
-
-
 }
+
+
 
 
 </style>
