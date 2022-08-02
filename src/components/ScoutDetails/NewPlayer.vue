@@ -9,6 +9,19 @@
         <input type="text" id="name" v-model="name" ref="name" autocomplete="off"/>
       </div>
 
+      <div class="form-control">
+        <label for="position">Position</label>
+        <input id="position" v-model="position" list="positions" ref="position"/>
+        <datalist id="positions">
+          <option value="Striker">Striker</option>
+          <option value="Midfielder">Midfielder</option>
+          <option value="LeftWinger">Left Winger</option>
+          <option value="RightWinger">Right Winger</option>
+          <option value="CenterBack">Center Back</option>
+          <option value="Goalkeeper">Goalkeeper</option>
+        </datalist>
+      </div>
+
 
       <div class="form-control">
         <label for="age">Age</label>
@@ -303,7 +316,7 @@ export default {
 div {
   margin: auto;
   max-width: 40rem;
-  background-color: aliceblue;
+  /*background-color: aliceblue;*/
 
 }
 
@@ -435,6 +448,13 @@ datalist {
   margin-top: -70px;
   cursor: pointer;
 }
+
+
+input[list]
+{
+
+}
+
 
 
 </style>
