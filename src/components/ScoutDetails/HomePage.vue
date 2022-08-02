@@ -10,7 +10,9 @@
       New Player
     </base-button>
   </base-card>
+  <keep-alive>
   <component :is="selectedTab"></component>
+  </keep-alive>
 </template>
 
 <script>
@@ -26,6 +28,7 @@ export default {
   data() {
     return {
       selectedTab: 'stored-players',
+
       storedPlayers: [{
         id: 1,
         name: 'Mason Greenwood',
@@ -55,7 +58,8 @@ export default {
   },
   provide() {
     return{
-      scoutPlayers: this.storedPlayers
+      scoutPlayers: this.storedPlayers,
+      addPlayer: this.addPlayer
     }
 
   },
@@ -71,6 +75,22 @@ export default {
     setSelectedTab(tab) {
       this.selectedTab = tab;
 
+    },
+    addPlayer(name, age, position, countries, preferredFoot, bestAttributes, weakness, link) {
+      const newPlayer = {
+        id: this.storedPlayers.length + 1,
+        name: name,
+        age: age,
+        position: position,
+        countries: countries,
+        preferredFoot: preferredFoot,
+        bestAttributes: bestAttributes,
+        weakness: weakness,
+        link: link,
+        // image: greenWoodImg
+      };
+      this.storedPlayers.unshift(newPlayer);
+      this.selectedTab = 'stored-players';
     }
 
   }
