@@ -90,7 +90,7 @@
                   <li
                       v-for="(best,index) in bestAttributes" :key="best"
                       :value="best"
-                      :ref=`
+                      :ref=`bestAttribute${index}`
                   >
                     <span class="listSStrength" ref="bestAttributesInput">{{ best.item }}</span>
                     <button class="buttonDelete" @click="deleteAttributeStrenght(index)">Delete</button>
