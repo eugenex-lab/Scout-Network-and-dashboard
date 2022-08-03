@@ -8,7 +8,7 @@
 
 <script>
 
-// import greenWoodImg from "/image/greenwoodImg.jpeg";
+// import greenWoodImg from "/image/Img.jpeg";
 // import seskoimg from "/image/noFace.png";
 // import StoredPlayers from "./components/ScoutDetails/StoredPlayers.vue";
 import TheHeader from "@/components/layouts/TheHeader";

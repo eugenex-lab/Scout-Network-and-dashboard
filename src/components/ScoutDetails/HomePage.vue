@@ -19,6 +19,9 @@
 
 import StoredPlayers from "./StoredPlayers.vue";
 import NewPlayer from "./NewPlayer";
+// import NewImage from "public/Mmg.png";
+
+
 
 
 export default {
@@ -36,9 +39,12 @@ export default {
         position: 'Striker',
         countries: 'England',
         preferredFoot: 'Left',
-        bestAttributes: ['Finishing', 'Two footed'],
+        bestAttribute: ['Finishing', 'Two footed'],
         weakness: ['Women', 'Acceleration'],
         link: "https://www.transfermarkt.com/mason-greenwood/profil/spieler/532826",
+        // image: NewImage
+        // add picture to image
+
         // image: greenWoodImg
       },
         {
@@ -48,9 +54,11 @@ export default {
           position: 'Striker',
           countries: 'Slovenia',
           preferredFoot: 'Right',
-          bestAttributes: ['Finishing', 'Acceleration', 'Strength'],
+          bestAttribute: ['Finishing', 'Acceleration', 'Strength'],
           weakness: ['None'],
           link: 'https://www.transfermarkt.com/benjamin-sesko/profil/spieler/627442',
+
+
           // image: seskoimg
         }
       ]
@@ -76,21 +84,23 @@ export default {
       this.selectedTab = tab;
 
     },
-    addPlayer(name, age, position, countries, preferredFoot, bestAttributes, weakness, link) {
+    addPlayer(name, age, position, countries, preferredFoot, bestAttributes, weakness, link,) {
       const newPlayer = {
-        id: this.storedPlayers.length + 1,
+        id: new Date().toString(),
         name: name,
         age: age,
         position: position,
         countries: countries,
         preferredFoot: preferredFoot,
-        bestAttributes: bestAttributes,
+        bestAttribute: bestAttributes,
         weakness: weakness,
-        link: link,
-        // image: greenWoodImg
+        link: link
       };
+
+      console.log('newPlayer');
       this.storedPlayers.unshift(newPlayer);
       this.selectedTab = 'stored-players';
+
     }
 
   }

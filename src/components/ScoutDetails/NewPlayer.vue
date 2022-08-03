@@ -1,24 +1,31 @@
 <template>
   <base-card>
     <!--    <form v-on:submit.prevent="addNewAttribute"-->
-    <form @submit.prevent="submitData"
-    >
+    <form @submit.prevent="submitData">
 
       <div class="form-control">
         <label for="name">Name</label>
-        <input type="text" id="name" v-model="name" ref="name" autocomplete="off"/>
+        <input type="text" id="name" v-model="name" ref="nameInput" autocomplete="off"/>
+      </div>
+
+      <div class="form-control">
+        <label for="position">Position</label>
+        <input list="positions" id="position" v-model="position" ref="positionInput" autocomplete="off"/>
+        <datalist id="positions">
+          <option v-for="position in positions" :value="position" :key="position"></option>
+        </datalist>
       </div>
 
 
       <div class="form-control">
         <label for="age">Age</label>
-        <input type="Number" id="age" v-model="age" ref="age"/>
+        <input type="Number" id="age" v-model="age" ref="ageInput"/>
       </div>
       <div class="form-control">
         <label for="countries">Nationality</label>
-        <input name="countries" id="countries" list="countriex" ref="countries"
+        <input name="countries" id="countries" v-model="countries" list="countriex" ref="countriesInput"
         >
-        <datalist id="countriex">
+        <datalist id="countriex" >
           <option value="Nigeria">Nigeria</option>
           <option value="USA">USA</option>
           <option value="Germany">Germany</option>
@@ -43,12 +50,12 @@
         <label for="preferredFoot">Preferred Foot</label>
         <!--        <input type="text" id="preferredFoot" v-model="preferredFoot" ref="preferredFoot"/>-->
         <span>
-          <input type="checkbox" id="right" name="right" ref="right" v-model="right">
+          <input type="checkbox" id="right" name="right" ref="rightInput" v-model="right" >
           <label class="tick" for="right" style="font-weight: normal">right</label>
 </span>
 
         <span>
-          <input type="checkbox" id="left" name="left" ref="left" v-model="left">
+          <input type="checkbox" id="left" name="left" ref="leftInput" v-model="left">
 
           <label class="tick" for="left" style="font-weight: normal">left</label>
         </span>
@@ -57,17 +64,19 @@
 
       <div class="form-control">
         <label for="best-attribute">Best Attributes</label>
-        <input type="text" id="best-attribute" v-model="newBestAttributeText" ref="bestAttributes"
-               placeholder="E.g. leadership" autocomplete="off"/>
+        <input type="text" id="best-attribute" v-model="bestAttribute"
+               placeholder="E.g. leadership" autocomplete="off" />
         <br>
-        <button type='submit' @click="submit(addNewAttribute())" class="buttonAdd">Add</button>
+        <button type='submit' @click.prevent="submit(addNewAttribute())" class="buttonAdd">Add</button>
         <br>
         <br>
         <label for="weakness-attribute">Weakness Attributes</label>
-        <input type="text" id="weakness-attribute" v-model="newWeaknessAttributeText" ref="weaknessAttribute"
+        <input type="text" id="weakness-attribute" v-model="weakness"
                placeholder="E.g. strength" autocomplete="off"/>
         <br>
-        <button type='submit' @click="submit(addNewAttributeWeakness())" class="buttonAddWeak">Add</button>
+<!--        <button type='submit' @click="submit(addNewAttributeWeakness())"-->
+        <button type='submit' @click.prevent="submit(addNewAttributeWeakness())" class="buttonAdd">Add</button>
+        <br>
       </div>
 
       <div class="shitUp" v-show="showCard">
@@ -78,9 +87,9 @@
               <div class="list-attribute">
                 <ul>
                   <li
-                      v-for="(best,index) in bestAttributes" :key="best" ref="bestAttributes"
+                      v-for="(best,index) in bestAttributes" :key="best"
                   >
-                    <span class="listSStrength">{{ best.item }}</span>
+                    <span class="listSStrength" ref="bestAttributesInput">{{ best.item }}</span>
                     <button class="buttonDelete" @click="deleteAttributeStrenght(index)">Delete</button>
                   </li>
                 </ul>
@@ -91,7 +100,7 @@
               <div class="list-attribute" id="red">
                 <ul>
                   <li
-                      v-for="(weak, index) in weaknessAttributes" :key="weak" ref="weaknessAttributes"
+                      v-for="(weak, index) in weaknessAttributes" :key="weak" ref="weaknessAttributesInput"
                   >
                     <!--              <span class="listSWeakness">{{ weak.item }}</span>-->
 
@@ -109,16 +118,18 @@
       <div class="form-control">
         <br>
         <label for="link">Resource to Player Profile</label>
-        <input type="url" id="link" v-model="link" ref="link"/>
+        <input type="url" id="link" v-model="link" ref="linkInput"/>
         <br>
         <label for="link">Add Player Image</label>
-        <input type="file" @change="onFile" ref="imgSrc"/>"
-        <img src="imgSrc" v-if="imgSrc" alt="" ref="imgSrc">
+        <input type="file" @change="onFile" />"
+        <img src="imgSrc" v-if="imgSrc" alt="" ref="imgSrcInput">
       </div>
       <div class="form-control">
-        <base-button :class="mode" type="submit" style="color: #ffffff ; background-color: #790f0f ">Add Player
+        <base-button type="submit" style="color: #ffffff ; background-color: #790f0f ">Add Player
         </base-button>
       </div>
+
+
     </form>
   </base-card>
 </template>
@@ -130,24 +141,31 @@
 import BaseCard from "@/components/UI/BaseCard";
 // import ValidationForm from "@/components/Validation/ValidationForm";
 export default {
-  inject: ["addPlayer"],
+
   components: {
     BaseCard,
 
   },
   props: ['item'],
   bestAttributesInput: "",
+  weaknessAttributesInput: "",
+
+
+
   data() {
     return {
       showCard: false,
+      positions: ["Goalkeeper", "Defender", "Midfielder", "Forward"],
 
-      name: 'Home',
-      imgSrc: '',
-      newBestAttributeText: '',
-      newWeaknessAttributeText: '',
-      props: ["bestAttributes", "weaknessAttributes"],
       weaknessAttributes: [],
+
       bestAttributes: [],
+      weakness: "",
+      bestAttribute: "",
+      imgSrc: '',
+
+      props: ["bestAttributes", "weaknessAttributes"],
+
       nextAttributeId: 3
 
 
@@ -173,6 +191,8 @@ export default {
     }
 
   },
+  inject: ["addPlayer"],
+
   methods: {
 
     // delete method by index
@@ -184,14 +204,10 @@ export default {
       this.bestAttributes.splice(index, 1);
     },
 
-    addNewAttributeWeakness() {
-      console.log("showCard");
-      console.log(this.showCard + "<-------++-------- showCard");
-      console.log(this.weaknessAttributes.length + "<--------------- weaknessAttributes.length");
-      console.log(this.bestAttributes.length + "<--------------- bestAttributes.length");
+    addNewAttributeWeakness: function() {
 
 
-      if (this.newWeaknessAttributeText === "") {
+      if (this.weaknesst === "") {
         this.showCard = false;
         return false;
       } else if (this.weaknessAttributes.length > 2 || this.weaknessAttributes.length < 0) {
@@ -202,9 +218,9 @@ export default {
 
         this.weaknessAttributes.push({
           id: this.nextAttributeId,
-          item: this.newWeaknessAttributeText
+          item: this.weakness
         });
-        this.newWeaknessAttributeText = '';
+        this.weakness = '';
         this.nextAttributeId++;
         // this.showCard=== true;
         this.showCard = true;
@@ -212,8 +228,14 @@ export default {
     },
     addNewAttribute: function () {
 
+      console.log("sign in button is pressed");
+      // stop form from submitting
+
+      console.log("showCard");
+      console.log(this.showCard + "<-------++-------- showCard");
+
       // handle empty input
-      if (this.newBestAttributeText === '') {
+      if (this.bestAttribute === '') {
         this.showCard = false;
         return false;
 
@@ -221,12 +243,12 @@ export default {
         this.showCard = false;
         return false;
       } else {
-        console.log(this.newBestAttributeText, this.nextAttributeId);
+        console.log(this.bestAttribute, this.nextAttributeId);
         this.bestAttributes.push({
           id: this.nextAttributeId++,
-          item: this.newBestAttributeText,
+          item: this.bestAttribute,
         });
-        this.newBestAttributeText = '';
+        this.bestAttribute = '';
         // this.showCard=== true;
         this.showCard = true;
       }
@@ -241,17 +263,23 @@ export default {
       reader.onload = () => (this.imgSrc = reader.result)
 
     },
-    submitData() {
-      const enteredName = this.$refs.name.value
-      const enteredAge = this.$refs.age.value
-      const enteredBio = this.$refs.bio.value
-      const enteredLink = this.$refs.link.value
-      const enteredImgSrc = this.$refs.imgSrc.value
-      const enteredBestAttributes = this.$refs.bestAttributes.value
-      const enteredWeaknessAttributes = this.$refs.weaknessAttributes.value
 
-      console.log(enteredName, enteredAge, enteredBio, enteredLink, enteredImgSrc, enteredBestAttributes, enteredWeaknessAttributes);
-      this.addPlayer(enteredName, enteredAge, enteredBio, enteredLink, enteredImgSrc, enteredBestAttributes, enteredWeaknessAttributes);
+    submitData() {
+      console.log("submitData");
+      const enteredName = this.$refs.nameInput.value;
+      const enteredPosition = this.$refs.positionInput.value;
+      const enteredAge = this.$refs.ageInput.value;
+      const enteredCountries = this.$refs.countriesInput.value;
+      const enteredRight = this.$refs.rightInput.value;
+      const enteredLeft = this.$refs.leftInput.value;
+
+      const enteredBestAttributes = this.$refs.bestAttributesInput.value;
+      const enteredWeaknessAttributes = this.$refs.weaknessAttributesInput.value;
+      const enteredLink = this.$refs.linkInput.value;
+
+      console.log("$$$$$$$$" + enteredName, enteredPosition, enteredAge, enteredCountries, enteredRight, enteredLeft, enteredBestAttributes, enteredWeaknessAttributes, enteredLink);
+
+      this.addPlayer(enteredName, enteredPosition, enteredAge, enteredCountries, enteredRight, enteredLeft, enteredBestAttributes, enteredWeaknessAttributes, enteredLink);
 
     }
   }

@@ -6,6 +6,9 @@
     <header>
       <h2>Name: {{name}} </h2>
       <img src="{{image}}" alt="">
+<!--      <img src="./public/Mmg.png" alt="">-->
+
+
       <base-button mode="flat">Delete</base-button>
 
     </header>
@@ -19,13 +22,13 @@
     <span class="side">
         <h4 class="strength">Best Attributes</h4>
       <ul>
-        <li v-for="best in bestAttributes" :key="best">
+        <li v-for="best in bestAttribute" :key="best">
             <span>{{best}}</span>
         </li>
       </ul>
     </span>
 
-    <span class="side">
+    <span class="side" id="left-shift">
          <h4 class="weakness">Weaknesses</h4>
           <ul>
          <li v-for="weak in weakness" :key="weak">
@@ -54,40 +57,41 @@ export default {
   {
     name: {
       type: String,
-      required: true
+      required: false
     },
     image:{
+      // add image to props
       type: String,
-      required: false,
+      required: false
     },
     age: {
       type: Number,
-      required: true
+      required: false
     },
     position:{
       type: String,
-      required: true,
+      required: false,
 
     },
     countries: {
       type: String,
-      required: true
+      required: false
     },
     preferredFoot:{
       type: String,
-      required: true
+      required: false
     },
-    bestAttributes:{
+    bestAttribute:{
       type: Array,
-      required: true
+      required: false
     },
     weakness:{
-      type: Array,
-      required: true
+      type: String,
+      required: false
     },
     link:{
       type: String,
-      required: true
+      required: false
     }
   },
 }
@@ -134,6 +138,8 @@ a:active {
   display: inline-block;
   width: 50%;
   vertical-align: top;
+
+
 }
 
 .weakness{
@@ -142,5 +148,15 @@ a:active {
 
 .strength{
   color: #183b96;
+}
+
+#left-shift
+{
+  margin-left: -160px;
+
+
+
+
+
 }
 </style>
