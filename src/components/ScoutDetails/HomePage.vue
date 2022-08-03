@@ -84,14 +84,17 @@ export default {
       this.selectedTab = tab;
 
     },
-    addPlayer(name, age, position, countries, preferredFoot, bestAttributes, weakness, link,) {
+    addPlayer(name, position, age, countries,
+              // preferredFootRight,preferredFootLeft,
+              bestAttributes, weakness, link,) {
       const newPlayer = {
         id: new Date().toString(),
         name: name,
-        age: age,
         position: position,
+        age: age,
         countries: countries,
-        preferredFoot: preferredFoot,
+        // rightInput: preferredFootRight,
+        // leftInput: preferredFootLeft,
         bestAttribute: bestAttributes,
         weakness: weakness,
         link: link

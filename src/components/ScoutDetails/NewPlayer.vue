@@ -21,11 +21,12 @@
         <label for="age">Age</label>
         <input type="Number" id="age" v-model="age" ref="ageInput"/>
       </div>
+
       <div class="form-control">
         <label for="countries">Nationality</label>
         <input name="countries" id="countries" v-model="countries" list="countriex" ref="countriesInput"
         >
-        <datalist id="countriex" >
+        <datalist id="countriex">
           <option value="Nigeria">Nigeria</option>
           <option value="USA">USA</option>
           <option value="Germany">Germany</option>
@@ -46,26 +47,26 @@
           <option value="Mexico">Mexico</option>
         </datalist>
       </div>
-      <div class="form-control">
-        <label for="preferredFoot">Preferred Foot</label>
-        <!--        <input type="text" id="preferredFoot" v-model="preferredFoot" ref="preferredFoot"/>-->
-        <span>
-          <input type="checkbox" id="right" name="right" ref="rightInput" v-model="right" >
-          <label class="tick" for="right" style="font-weight: normal">right</label>
-</span>
+<!--      <div class="form-control">-->
+<!--        <label for="preferredFoot">Preferred Foot</label>-->
+<!--        &lt;!&ndash;        <input type="text" id="preferredFoot" v-model="preferredFoot" ref="preferredFoot"/>&ndash;&gt;-->
+<!--        <span>-->
+<!--          <input type="checkbox" id="right" name="right" ref="rightInput" v-model="right">-->
+<!--          <label class="tick" for="right" style="font-weight: normal">right</label>-->
+<!--</span>-->
 
-        <span>
-          <input type="checkbox" id="left" name="left" ref="leftInput" v-model="left">
+<!--        <span>-->
+<!--          <input type="checkbox" id="left" name="left" ref="leftInput" v-model="left">-->
 
-          <label class="tick" for="left" style="font-weight: normal">left</label>
-        </span>
+<!--          <label class="tick" for="left" style="font-weight: normal">left</label>-->
+<!--        </span>-->
 
-      </div>
+<!--      </div>-->
 
       <div class="form-control">
         <label for="best-attribute">Best Attributes</label>
         <input type="text" id="best-attribute" v-model="bestAttribute"
-               placeholder="E.g. leadership" autocomplete="off" />
+               placeholder="E.g. leadership" autocomplete="off"/>
         <br>
         <button type='submit' @click.prevent="submit(addNewAttribute())" class="buttonAdd">Add</button>
         <br>
@@ -74,7 +75,7 @@
         <input type="text" id="weakness-attribute" v-model="weakness"
                placeholder="E.g. strength" autocomplete="off"/>
         <br>
-<!--        <button type='submit' @click="submit(addNewAttributeWeakness())"-->
+        <!--        <button type='submit' @click="submit(addNewAttributeWeakness())"-->
         <button type='submit' @click.prevent="submit(addNewAttributeWeakness())" class="buttonAdd">Add</button>
         <br>
       </div>
@@ -88,6 +89,8 @@
                 <ul>
                   <li
                       v-for="(best,index) in bestAttributes" :key="best"
+                      :value="best"
+                      :ref=`
                   >
                     <span class="listSStrength" ref="bestAttributesInput">{{ best.item }}</span>
                     <button class="buttonDelete" @click="deleteAttributeStrenght(index)">Delete</button>
@@ -121,7 +124,7 @@
         <input type="url" id="link" v-model="link" ref="linkInput"/>
         <br>
         <label for="link">Add Player Image</label>
-        <input type="file" @change="onFile" />"
+        <input type="file" @change="onFile"/>"
         <img src="imgSrc" v-if="imgSrc" alt="" ref="imgSrcInput">
       </div>
       <div class="form-control">
@@ -149,7 +152,6 @@ export default {
   props: ['item'],
   bestAttributesInput: "",
   weaknessAttributesInput: "",
-
 
 
   data() {
@@ -204,10 +206,9 @@ export default {
       this.bestAttributes.splice(index, 1);
     },
 
-    addNewAttributeWeakness: function() {
+    addNewAttributeWeakness: function () {
 
-
-      if (this.weaknesst === "") {
+      if (this.weakness === "") {
         this.showCard = false;
         return false;
       } else if (this.weaknessAttributes.length > 2 || this.weaknessAttributes.length < 0) {
@@ -270,17 +271,22 @@ export default {
       const enteredPosition = this.$refs.positionInput.value;
       const enteredAge = this.$refs.ageInput.value;
       const enteredCountries = this.$refs.countriesInput.value;
-      const enteredRight = this.$refs.rightInput.value;
-      const enteredLeft = this.$refs.leftInput.value;
-
+      // const enteredRight = this.$refs.rightInput.value;
+      // const enteredLeft = this.$refs.leftInput.value;
       const enteredBestAttributes = this.$refs.bestAttributesInput.value;
       const enteredWeaknessAttributes = this.$refs.weaknessAttributesInput.value;
       const enteredLink = this.$refs.linkInput.value;
 
-      console.log("$$$$$$$$" + enteredName, enteredPosition, enteredAge, enteredCountries, enteredRight, enteredLeft, enteredBestAttributes, enteredWeaknessAttributes, enteredLink);
+      console.log("$$$$$$$$" + enteredName, enteredPosition, enteredAge, enteredCountries,
+          // enteredRight, enteredLeft,
+          enteredBestAttributes, enteredWeaknessAttributes, enteredLink);
 
-      this.addPlayer(enteredName, enteredPosition, enteredAge, enteredCountries, enteredRight, enteredLeft, enteredBestAttributes, enteredWeaknessAttributes, enteredLink);
+      this.addPlayer(enteredName, enteredPosition, enteredAge, enteredCountries
+          // , enteredRight, enteredLeft
+          , enteredBestAttributes, enteredWeaknessAttributes, enteredLink);
 
+
+      console.log("@@@her is age "+enteredAge, "@@@ here is ppsition" + enteredPosition);
     }
   }
 }
