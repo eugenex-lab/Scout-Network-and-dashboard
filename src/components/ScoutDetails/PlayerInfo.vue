@@ -31,9 +31,14 @@
     <span class="side" id="left-shift">
          <h4 class="weakness">Weaknesses</h4>
           <ul>
-         <li v-for="weak in weakness" :key="weak">
-            <span>{{weak}}</span>
-        </li>
+<!--         <li v-for="weak in weakness" :key="weak">-->
+<!--            <span>{{weak}}</span>-->
+<!--        </li>-->
+
+
+            <li v-for=" (value, key)  in Object.entries(weakness)" :key="key">
+                <span>{{value.objectID}}</span>
+            </li>
       </ul>
     </span>
     <br>
@@ -86,7 +91,7 @@ export default {
       required: false
     },
     weakness:{
-      type: String,
+      type: Array,
       required: false
     },
     link:{

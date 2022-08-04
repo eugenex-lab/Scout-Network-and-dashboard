@@ -91,13 +91,14 @@ export default {
         id: new Date().toString(),
         name: name,
         position: position,
-        age: age,
-        countries: countries,
+        age: age,  // add age to props
+        countries: countries, // add countries to props
         // rightInput: preferredFootRight,
         // leftInput: preferredFootLeft,
-        bestAttribute: bestAttributes,
-        weakness: weakness,
-        link: link
+        bestAttribute: bestAttributes,  // add bestAttribute to props
+        // add stringifyed array only id to props
+        weakness: weakness, // array of strings
+        link: link  //
       };
 
       console.log('newPlayer');

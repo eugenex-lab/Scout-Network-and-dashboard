@@ -90,9 +90,10 @@
                   <li
                       v-for="(best,index) in bestAttributes" :key="best"
                       :value="best"
-                      :ref=`bestAttribute${index}`
+                      ref="bestAttributes"
+
                   >
-                    <span class="listSStrength" ref="bestAttributesInput">{{ best.item }}</span>
+                    <span class="listSStrength" >{{ best.item }}</span>
                     <button class="buttonDelete" @click="deleteAttributeStrenght(index)">Delete</button>
                   </li>
                 </ul>
@@ -169,8 +170,6 @@ export default {
       props: ["bestAttributes", "weaknessAttributes"],
 
       nextAttributeId: 3
-
-
     }
   },
   watch: {
@@ -196,6 +195,7 @@ export default {
   inject: ["addPlayer"],
 
   methods: {
+
 
     // delete method by index
     deleteAttributeWeak(index) {
@@ -229,11 +229,13 @@ export default {
     },
     addNewAttribute: function () {
 
-      console.log("sign in button is pressed");
-      // stop form from submitting
 
-      console.log("showCard");
-      console.log(this.showCard + "<-------++-------- showCard");
+      // log content of bestAttributes array in console
+      console.log(this.bestAttributes.length + " @@@@######bestAttribute  LENGHT");
+      // log length of bestAttributes array in console
+      console.log("Listdssss" + this.bestAttributes[0] + this.bestAttributes[1] + "######bestAttribute");
+// log content of bestAttributes array in console
+
 
       // handle empty input
       if (this.bestAttribute === '') {
@@ -244,7 +246,7 @@ export default {
         this.showCard = false;
         return false;
       } else {
-        console.log(this.bestAttribute, this.nextAttributeId);
+        console.log(this.bestAttribute);
         this.bestAttributes.push({
           id: this.nextAttributeId++,
           item: this.bestAttribute,
@@ -270,23 +272,33 @@ export default {
       const enteredName = this.$refs.nameInput.value;
       const enteredPosition = this.$refs.positionInput.value;
       const enteredAge = this.$refs.ageInput.value;
-      const enteredCountries = this.$refs.countriesInput.value;
-      // const enteredRight = this.$refs.rightInput.value;
-      // const enteredLeft = this.$refs.leftInput.value;
-      const enteredBestAttributes = this.$refs.bestAttributesInput.value;
-      const enteredWeaknessAttributes = this.$refs.weaknessAttributesInput.value;
-      const enteredLink = this.$refs.linkInput.value;
+      const enteredCountries = this.$refs.countriesInput.size; // this.$refs.countriesInput.value;
+      //
+      // const enteredBestAttributes = this.$refs.bestAttributes;
+      // const enteredWeaknessAttributes = this.$refs.weaknessAttributesInput;
+      //
+      const bestAttributes = JSON.stringify(this.bestAttributes);  // convert array to string
+      const weaknessAttributes = JSON.stringify(this.weaknessAttributes);
 
-      console.log("$$$$$$$$" + enteredName, enteredPosition, enteredAge, enteredCountries,
-          // enteredRight, enteredLeft,
-          enteredBestAttributes, enteredWeaknessAttributes, enteredLink);
+
+      const enteredLink = this.$refs.linkInput.value;
+      // save an array of bestAttributes to local storage
+     // convert array to string
+
+
+      //  console log json string of bestAttributes
+      console.log(JSON.stringify(this.bestAttributes));
+
+
+      // console.log("$$$$$$$$$$FINDING NEMO$$$$$$$$$$$$$$$$ --->>> "+this.enteredBestAttributes.innerText);
+      // console.log("$$$$$$$$$$FINDING NEMO$$$$$$$$$$$$$$$$ --->>> "+this.enteredWeaknessAttributes.length);length
 
       this.addPlayer(enteredName, enteredPosition, enteredAge, enteredCountries
           // , enteredRight, enteredLeft
-          , enteredBestAttributes, enteredWeaknessAttributes, enteredLink);
+          , bestAttributes, weaknessAttributes, enteredLink);
 
 
-      console.log("@@@her is age "+enteredAge, "@@@ here is ppsition" + enteredPosition);
+
     }
   }
 }
