@@ -1,10 +1,9 @@
 <template>
   <ul>
     <player-info v-for="player in scoutPlayers" :key="player.id" :position="player.position"
-                 :age="player.age" :best-attributes="player.bestAttributes" :link="player.link" :name="player.name"
+                 :age="player.age" :best-attribute="player.bestAttribute" :link="player.link" :name="player.name"
                  :countries="player.countries" :preferred-foot="player.preferredFoot"
-                 :weakness="player.weakness"
-    >
+                 :weakness="player.weakness" :image="player.image">
     </player-info>
   </ul>
 </template>
