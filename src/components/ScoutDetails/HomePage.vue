@@ -2,16 +2,16 @@
 
   <base-card class="edit">
     <base-button @click="setSelectedTab('stored-players')"
-     :mode="storedResButtonMode">
+                 :mode="storedResButtonMode">
       Scout Repo
     </base-button>
-    <base-button  @click="setSelectedTab('new-player')"
-    :mode="AddResButtonMode">
+    <base-button @click="setSelectedTab('new-player')"
+                 :mode="AddResButtonMode">
       New Player
     </base-button>
   </base-card>
   <keep-alive>
-  <component :is="selectedTab"></component>
+    <component :is="selectedTab"></component>
   </keep-alive>
 </template>
 
@@ -22,18 +22,16 @@ import NewPlayer from "./NewPlayer";
 // import NewImage from "public/Mmg.png";
 
 
-
-
 export default {
-  components:{
-    StoredPlayers,NewPlayer
+  components: {
+    StoredPlayers, NewPlayer
   },
   data() {
     return {
       selectedTab: 'stored-players',
 
       storedPlayers: [{
-        id: 1,
+        id: 0,
         name: 'Mason Greenwood',
         age: 21,
         position: 'Striker',
@@ -48,7 +46,7 @@ export default {
         // image: greenWoodImg
       },
         {
-          id: 2,
+          id: 1,
           name: 'Benjamin Šeško',
           age: 19,
           position: 'Striker',
@@ -65,18 +63,20 @@ export default {
     }
   },
   provide() {
-    return{
+    return {
       scoutPlayers: this.storedPlayers,
-      addPlayer: this.addPlayer
+      addPlayer: this.addPlayer,
+      deletePlayer: this.removePlayer
+
     }
 
   },
-  computed:{
-    storedResButtonMode(){
+  computed: {
+    storedResButtonMode() {
       return this.selectedTab === 'stored-players' ? null : 'flat'
     },
-    AddResButtonMode(){
-      return this.selectedTab === 'new-player' ? null : 'flat' ;
+    AddResButtonMode() {
+      return this.selectedTab === 'new-player' ? null : 'flat';
     }
   },
   methods: {
@@ -99,17 +99,24 @@ export default {
         // add stringifyed array only id to props
         weakness: weakness, // array of strings
         link: link  //
+
+
       };
+
 
       console.log('newPlayer');
       this.storedPlayers.unshift(newPlayer);
       this.selectedTab = 'stored-players';
 
-    }
+    },
+    removePlayer(resId) {
+      // remove player from array using splice
+      this.storedPlayers.splice(this.storedPlayers.findIndex(res => res.id === resId), 1);
+    },
 
-  }
+  },
 
-}
+};
 </script>
 
 <style scoped>
@@ -123,7 +130,6 @@ export default {
   color: blue;
   background-color: #ea9d9d;
 }
-
 
 
 </style>

@@ -9,7 +9,7 @@
           <!--      <img src="./public/Mmg.png" alt="">-->
 
 
-          <base-button  mode="flat">Delete</base-button>
+          <base-button  mode="flat"  @click="deletePlayer(id)">Delete</base-button>
 
         </header>
       </div>
@@ -22,7 +22,9 @@
       <span class="side">
         <h4 class="strength">Best Attributes</h4>
       <ul>
-        <li v-for="best in bestAttribute" :key="best">
+        <li v-for="best in bestAttribute" :key="best"
+
+        >
             <span>{{ best }}</span>
         </li>
       </ul>
@@ -67,7 +69,7 @@ export default {
     return {
       // name: "",
       // age: "",
-      kylexy: countries,  //
+ //
 
       // position: "",
       // preferredFoot: "",
@@ -77,51 +79,52 @@ export default {
       // image: "",
     }
   },
-  props:
-      {
-        name: {
-          type: String,
-          required: false
-        },
-        image: {
-          // add image to props
-          type: String,
-          required: false
-        },
-        age: {
-          type: Number,
-          required: false
-        },
-        position: {
-          type: String,
-          required: false,
-
-        },
-        countries: {
-          type: String,
-          required: false
-        },
-        preferredFoot: {
-          type: String,
-          required: false
-        },
-        bestAttribute: {
-          type: Array,
-          required: false
-        },
-        weakness: {
-          type: Array,
-          required: false
-        },
-        link: {
-          type: String,
-          required: false
-        }
-      },
+  inject: ['deletePlayer'],
+  props: ['id', 'name', 'countries', 'age', 'position', 'preferredFoot', 'bestAttribute', 'weakness', 'link', 'image'],
+  // props:
+  //     {
+  //
+  //       name: {
+  //         type: String,
+  //         required: false
+  //       },
+  //       image: {
+  //         // add image to props
+  //         type: String,
+  //         required: false
+  //       },
+  //       age: {
+  //         type: Number,
+  //         required: false
+  //       },
+  //       position: {
+  //         type: String,
+  //         required: false,
+  //
+  //       },
+  //       countries: {
+  //         type: String,
+  //         required: false
+  //       },
+  //       preferredFoot: {
+  //         type: String,
+  //         required: false
+  //       },
+  //       bestAttribute: {
+  //         type: String,
+  //         required: false
+  //       },
+  //       weakness: {
+  //         type: Array,
+  //         required: false
+  //       },
+  //       link: {
+  //         type: String,
+  //         required: false
+  //       }
+  //     },/
   computed: {
-    printKylexy() {
-      console.log(this.kylexy);
-    },
+
     }
 
 }

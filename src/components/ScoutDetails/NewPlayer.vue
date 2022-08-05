@@ -1,31 +1,51 @@
 <template>
+  <base-dialog v-if="inputIsInvalid"
+               title="Invalid input"
+      :message="message" :okText="okText"
+
+               @close="closeDialog">
+
+    <template #default>
+      <p>
+        At least one of the fields is invalid.
+      </p>
+      <p>
+        Please check the fields and try again.
+      </p>
+    </template>
+    <template #actions>
+      <base-button @click="closeDialog" :text="okText" >Continue editing
+      </base-button>
+
+    </template>
+
+  </base-dialog>
   <base-card>
     <!--    <form v-on:submit.prevent="addNewAttribute"-->
     <form @submit.prevent="submitData">
-
       <div class="form-control">
         <label for="name">Name</label>
         <input type="text" id="name" v-model="name" ref="nameInput" autocomplete="off"/>
       </div>
 
-      <div class="form-control">
-        <label for="position">Position</label>
-        <input list="positions" id="position" v-model="position" ref="positionInput" autocomplete="off"/>
-        <datalist id="positions">
-          <option v-for="position in positions" :value="position" :key="position"></option>
-        </datalist>
-      </div>
+<!--      <div class="form-control">-->
+<!--        <label for="position">Position</label>-->
+<!--        <input list="positions" id="position" v-model="position" ref="positionInput" autocomplete="off"/>-->
+<!--        <datalist id="positions">-->
+<!--          <option v-for="position in positions" :value="position" :key="position"></option>-->
+<!--        </datalist>-->
+<!--      </div>-->
 
       <div class="form-control">
         <label for="position">Position</label>
-        <input id="position" v-model="position" list="positions" ref="position"/>
+        <input id="position" v-model="position" list="positions" ref="positionInput"/>
         <datalist id="positions">
-          <option value="Striker">Striker</option>
-          <option value="Midfielder">Midfielder</option>
-          <option value="LeftWinger">Left Winger</option>
-          <option value="RightWinger">Right Winger</option>
-          <option value="CenterBack">Center Back</option>
-          <option value="Goalkeeper">Goalkeeper</option>
+          <option value="Striker"></option>
+          <option value="Midfielder"></option>
+          <option value="LeftWinger"></option>
+          <option value="RightWinger"></option>
+          <option value="CenterBack"></option>
+          <option value="Goalkeeper"></option>
         </datalist>
       </div>
 
@@ -156,10 +176,12 @@
 // import List from "@/components/ScoutDetails/LIstPlayer";
 
 import BaseCard from "@/components/UI/BaseCard";
+import BaseDialog from "@/components/UI/BaseDialog";
 // import ValidationForm from "@/components/Validation/ValidationForm";
 export default {
 
   components: {
+    BaseDialog,
     BaseCard,
 
   },
@@ -170,6 +192,8 @@ export default {
 
   data() {
     return {
+
+      inputIsInvalid: false,
       showCard: false,
       positions: ["Goalkeeper", "Defender", "Midfielder", "Forward"],
 
@@ -208,6 +232,9 @@ export default {
   inject: ["addPlayer"],
 
   methods: {
+    closeDialog() {
+      this.inputIsInvalid = false;
+    },
 
 
     // delete method by index
@@ -285,34 +312,29 @@ export default {
       const enteredName = this.$refs.nameInput.value;
       const enteredPosition = this.$refs.positionInput.value;
       const enteredAge = this.$refs.ageInput.value;
-      const enteredCountries = this.$refs.countriesInput.size; // this.$refs.countriesInput.value;
-      //
-      // const enteredBestAttributes = this.$refs.bestAttributes;
-      // const enteredWeaknessAttributes = this.$refs.weaknessAttributesInput;
-      //
-      const bestAttributes = JSON.stringify(this.bestAttributes);  // convert array to string
-      const weaknessAttributes = JSON.stringify(this.weaknessAttributes);
-
-
+      const enteredCountries = this.$refs.countriesInput.value; // this.$refs.countriesInput.value;
+      const bestAttributes = JSON.stringify(this.bestAttributes.value);  // convert array to string
+      const weaknessAttributes = JSON.stringify(this.weaknessAttributes.value);
       const enteredLink = this.$refs.linkInput.value;
       // save an array of bestAttributes to local storage
      // convert array to string
 
-
-      //  console log json string of bestAttributes
       console.log(JSON.stringify(this.bestAttributes));
+      console.log(JSON.stringify(this.weaknessAttributes));
 
+      // check if all fields are filled
 
-      // console.log("$$$$$$$$$$FINDING NEMO$$$$$$$$$$$$$$$$ --->>> "+this.enteredBestAttributes.innerText);
-      // console.log("$$$$$$$$$$FINDING NEMO$$$$$$$$$$$$$$$$ --->>> "+this.enteredWeaknessAttributes.length);length
+      if(enteredName.trim() === '' || enteredPosition.trim() === '' || enteredAge.trim() === '' ||
+          enteredCountries.trim() === '' || enteredLink.trim() === ''
+          || this.bestAttributes.length === 0 || this.weaknessAttributes.length === 0
 
-      this.addPlayer(enteredName, enteredPosition, enteredAge, enteredCountries
-          // , enteredRight, enteredLeft
-          , bestAttributes, weaknessAttributes, enteredLink);
-
-
-
+          ) {
+        this.inputIsInvalid = true;
+        return ;
     }
+      this.addPlayer(enteredName, enteredPosition, enteredAge, enteredCountries
+          , bestAttributes, weaknessAttributes, enteredLink);
+}
   }
 }
 
