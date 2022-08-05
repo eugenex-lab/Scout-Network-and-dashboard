@@ -362,7 +362,7 @@ export default {
 div {
   margin: auto;
   max-width: 40rem;
-  /*background-color: aliceblue;*/
+  background-color: aliceblue;
 
 }
 

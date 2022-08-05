@@ -17,13 +17,11 @@ export default {
     PlayerInfo,
   },
   // props: ['scoutPlayers'],
-  inject:['scoutPlayers'],
+  inject: ['scoutPlayers'],
 
   name: "DocumentedPlayerList"
   ,
-  methods:{
-
-  }
+  methods: {}
 }
 </script>
 

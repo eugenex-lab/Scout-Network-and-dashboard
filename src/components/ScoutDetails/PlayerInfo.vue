@@ -1,104 +1,129 @@
 <template>
 
-    <base-card>
-<li>
-    <div>
-    <header>
-      <h2>Name: {{name}} </h2>
-      <img src="{{image}}" alt="">
-<!--      <img src="./public/Mmg.png" alt="">-->
+  <base-card>
+    <li>
+      <div>
+        <header>
+          <h2>Name: {{ name }} </h2>
+          <img src="{{image}}" alt="">
+          <!--      <img src="./public/Mmg.png" alt="">-->
 
 
-      <base-button mode="flat">Delete</base-button>
+          <base-button  mode="flat">Delete</base-button>
 
-    </header>
-    </div>
+        </header>
+      </div>
 
-    <p>Age: {{age}}</p>
-    <p>Nationality: {{countries}}</p>
-    <p>Position: {{position}}</p>
-    <p>preferredFoot: {{preferredFoot}}</p>
+      <p>Age: {{ age }}</p>
+      <p>Nationality: {{ countries }}</p>
+      <p>Position: {{ position }}</p>
+      <p>preferredFoot: {{ preferredFoot }}</p>
 
-    <span class="side">
+      <span class="side">
         <h4 class="strength">Best Attributes</h4>
       <ul>
         <li v-for="best in bestAttribute" :key="best">
-            <span>{{best}}</span>
+            <span>{{ best }}</span>
         </li>
       </ul>
     </span>
 
-    <span class="side" id="left-shift">
+      <span class="side" id="left-shift">
          <h4 class="weakness">Weaknesses</h4>
           <ul>
-<!--         <li v-for="weak in weakness" :key="weak">-->
-<!--            <span>{{weak}}</span>-->
-<!--        </li>-->
+         <li v-for="weak in weakness
+            " :key="weak">
+            <span>{{ weak
+                }}</span>
+        </li>
 
 
-            <li v-for=" (value, key)  in Object.entries(weakness)" :key="key">
-                <span>{{value.objectID}}</span>
-            </li>
+
       </ul>
     </span>
-    <br>
-    <br>
-    <nav>
-      <a :href="link" target="_blank">Click to see player statistics </a>
-    </nav>
-    <br>
-    <br>
-</li>
-    </base-card>
+      <br>
+      <br>
+      <nav>
+        <a :href="link" target="_blank">Click to see player statistics </a>
+      </nav>
+      <br>
+      <br>
+    </li>
+  </base-card>
 
 </template>
 
 <script>
 
 import BaseButton from "@/components/UI/BaseButton";
-export default {
-  components: {BaseButton},
-  props:
-  {
-    name: {
-      type: String,
-      required: false
-    },
-    image:{
-      // add image to props
-      type: String,
-      required: false
-    },
-    age: {
-      type: Number,
-      required: false
-    },
-    position:{
-      type: String,
-      required: false,
 
-    },
-    countries: {
-      type: String,
-      required: false
-    },
-    preferredFoot:{
-      type: String,
-      required: false
-    },
-    bestAttribute:{
-      type: Array,
-      required: false
-    },
-    weakness:{
-      type: Array,
-      required: false
-    },
-    link:{
-      type: String,
-      required: false
+export default {
+  components: {BaseButton
+
+  },
+
+  //
+  data() {
+    return {
+      // name: "",
+      // age: "",
+      kylexy: countries,  //
+
+      // position: "",
+      // preferredFoot: "",
+      // bestAttribute: [],
+      // weakness: [],
+      // link: "",
+      // image: "",
     }
   },
+  props:
+      {
+        name: {
+          type: String,
+          required: false
+        },
+        image: {
+          // add image to props
+          type: String,
+          required: false
+        },
+        age: {
+          type: Number,
+          required: false
+        },
+        position: {
+          type: String,
+          required: false,
+
+        },
+        countries: {
+          type: String,
+          required: false
+        },
+        preferredFoot: {
+          type: String,
+          required: false
+        },
+        bestAttribute: {
+          type: Array,
+          required: false
+        },
+        weakness: {
+          type: Array,
+          required: false
+        },
+        link: {
+          type: String,
+          required: false
+        }
+      },
+  computed: {
+    printKylexy() {
+      console.log(this.kylexy);
+    },
+    }
+
 }
 </script>
 
@@ -113,6 +138,7 @@ header {
   justify-content: space-between;
   align-items: center;
 }
+
 h2 {
   margin: 0;
   font-family: "Segoe UI", Arial, sans-serif;
@@ -147,20 +173,16 @@ a:active {
 
 }
 
-.weakness{
+.weakness {
   color: #790f0f;
 }
 
-.strength{
+.strength {
   color: #183b96;
 }
 
-#left-shift
-{
+#left-shift {
   margin-left: -160px;
-
-
-
 
 
 }
